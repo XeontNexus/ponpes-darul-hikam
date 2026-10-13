@@ -647,29 +647,56 @@ export function Pendaftaran({ isAdmin = false }: PendaftaranProps) {
                 </div>
               </div>
 
-              {/* Tombol CTA Membuka / Menutup Form */}
-              <div className="flex flex-col items-center justify-center pt-2 px-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setShowForm(!showForm)
-                    if (!showForm) {
-                      setTimeout(() => {
-                        const formElement = document.getElementById("form-pendaftaran-section")
-                        if (formElement) formElement.scrollIntoView({ behavior: "smooth" })
-                      }, 100)
-                    }
-                  }}
-                  className="w-full sm:w-auto min-w-0 sm:min-w-[320px] max-w-md mx-auto bg-emerald-700 hover:bg-emerald-800 text-white px-6 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base md:text-lg rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer text-center"
-                >
-                  <Send className="w-5 h-5 shrink-0 text-emerald-200" />
-                  <span className="truncate sm:whitespace-normal">
-                    {showForm ? "Tutup Formulir Pendaftaran" : "Isi Formulir Pendaftaran Online"}
-                  </span>
-                </button>
-                <p className="text-xs sm:text-sm text-gray-500 mt-2.5 text-center">
-                  {showForm ? "Klik tombol di atas untuk menyembunyikan formulir" : "Klik tombol di atas untuk membuka formulir pendaftaran santri baru"}
-                </p>
+              {/* Tombol CTA Membuka / Menutup Form - Tersinkron Sesuai Layout */}
+              <div className="pt-6 border-t border-emerald-100">
+                <div className="bg-gradient-to-br from-emerald-50 via-green-50/60 to-emerald-100/50 border-2 border-emerald-200/80 rounded-2xl sm:rounded-3xl p-6 sm:p-8 text-center shadow-sm">
+                  <div className="max-w-xl mx-auto space-y-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-700/10 text-emerald-800 text-xs font-bold tracking-wide uppercase">
+                      <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                      Langkah Selanjutnya
+                    </span>
+                    <h4 className="text-lg sm:text-xl md:text-2xl font-black text-green-950 tracking-tight">
+                      {showForm ? "Formulir Pendaftaran Telah Dibuka" : "Sudah Siap Melakukan Pendaftaran?"}
+                    </h4>
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed max-w-lg mx-auto">
+                      {showForm
+                        ? "Formulir pendaftaran telah terbuka di bawah ini. Anda dapat mengisinya sekarang atau menutupnya."
+                        : "Klik tombol di bawah ini untuk mengisi formulir pendaftaran santri baru secara online sesuai data dokumen asli."}
+                    </p>
+
+                    <div className="pt-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setShowForm(!showForm)
+                          if (!showForm) {
+                            setTimeout(() => {
+                              const formElement = document.getElementById("form-pendaftaran-section")
+                              if (formElement) formElement.scrollIntoView({ behavior: "smooth" })
+                            }, 100)
+                          }
+                        }}
+                        className={`w-full sm:w-auto min-w-0 sm:min-w-[340px] px-8 sm:px-12 py-3.5 sm:py-4 rounded-2xl font-bold text-sm sm:text-base md:text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] inline-flex items-center justify-center gap-3 cursor-pointer ${
+                          showForm
+                            ? "bg-rose-600 hover:bg-rose-700 text-white shadow-rose-600/20"
+                            : "bg-emerald-700 hover:bg-emerald-800 text-white shadow-emerald-700/25"
+                        }`}
+                      >
+                        {showForm ? (
+                          <>
+                            <X className="w-5 h-5 flex-shrink-0" />
+                            <span>Tutup Formulir Pendaftaran</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send className="w-5 h-5 flex-shrink-0" />
+                            <span>Isi Formulir Pendaftaran Online</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -1115,24 +1142,23 @@ export function Pendaftaran({ isAdmin = false }: PendaftaranProps) {
                 </div>
 
                 {/* 5. TOMBOL SUBMIT */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 border-t border-gray-100">
-                  <Button
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 pt-4 border-t border-gray-100">
+                  <button
                     type="button"
                     onClick={handleSubmit}
                     disabled={submitStatus === "loading"}
-                    className="w-full sm:w-auto bg-emerald-700 hover:bg-emerald-800 text-white px-10 py-4 text-base rounded-2xl font-bold shadow-md hover:scale-105 transition-all inline-flex items-center justify-center gap-2"
+                    className="w-full sm:w-auto min-w-0 sm:min-w-[280px] bg-emerald-700 hover:bg-emerald-800 text-white px-8 sm:px-12 py-3.5 sm:py-4 text-sm sm:text-base md:text-lg rounded-2xl font-bold shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all inline-flex items-center justify-center gap-2.5 cursor-pointer disabled:opacity-60"
                   >
-                    <Send className="w-4 h-4" />
-                    {submitStatus === "loading" ? "Sedang Mengirim..." : "Kirim Formulir Pendaftaran"}
-                  </Button>
-                  <Button
+                    <Send className="w-5 h-5 flex-shrink-0 text-emerald-200" />
+                    <span>{submitStatus === "loading" ? "Sedang Mengirim..." : "Kirim Formulir Pendaftaran"}</span>
+                  </button>
+                  <button
                     type="button"
-                    variant="outline"
                     onClick={() => setShowForm(false)}
-                    className="w-full sm:w-auto rounded-2xl text-gray-600 hover:text-gray-900"
+                    className="w-full sm:w-auto px-6 py-3.5 sm:py-4 rounded-2xl text-gray-700 hover:text-gray-900 border-2 border-gray-200 hover:bg-gray-100 font-bold text-sm sm:text-base transition-all cursor-pointer"
                   >
                     Batal / Tutup
-                  </Button>
+                  </button>
                 </div>
               </CardContent>
             </Card>
