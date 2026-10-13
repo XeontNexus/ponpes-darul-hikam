@@ -323,17 +323,17 @@ export function Prestasi({ isAdmin = false }: PrestasiProps) {
                 {/* Slider Arrows */}
                 <button
                   onClick={prevSlidePhoto}
-                  className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all bg-black/30 hover:bg-black/50 p-1.5 sm:p-2 rounded-full backdrop-blur-sm"
+                  className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all"
                   aria-label="Previous Photo"
                 >
-                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-md" />
+                  <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-md" />
                 </button>
                 <button
                   onClick={nextSlidePhoto}
-                  className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all bg-black/30 hover:bg-black/50 p-1.5 sm:p-2 rounded-full backdrop-blur-sm"
+                  className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all"
                   aria-label="Next Photo"
                 >
-                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-md" />
+                  <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-md" />
                 </button>
               </div>
 

@@ -361,17 +361,17 @@ export function Pendaftaran({ isAdmin = false }: PendaftaranProps) {
 
             <button
               onClick={() => setCurrentPsbSlide((prev) => (prev - 1 + psbSlides.length) % psbSlides.length)}
-              className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all bg-black/30 hover:bg-black/50 p-1.5 sm:p-2 rounded-full backdrop-blur-sm"
+              className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all"
               aria-label="Previous Slide"
             >
-              <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-md" />
+              <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-md" />
             </button>
             <button
               onClick={() => setCurrentPsbSlide((prev) => (prev + 1) % psbSlides.length)}
-              className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all bg-black/30 hover:bg-black/50 p-1.5 sm:p-2 rounded-full backdrop-blur-sm"
+              className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all"
               aria-label="Next Slide"
             >
-              <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7 drop-shadow-md" />
+              <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8 drop-shadow-md" />
             </button>
 
             <div className="hidden md:flex absolute bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 z-20 gap-1.5 sm:gap-2">
@@ -648,8 +648,9 @@ export function Pendaftaran({ isAdmin = false }: PendaftaranProps) {
               </div>
 
               {/* Tombol CTA Membuka / Menutup Form */}
-              <div className="text-center pt-2">
-                <Button
+              <div className="flex flex-col items-center justify-center pt-2 px-2">
+                <button
+                  type="button"
                   onClick={() => {
                     setShowForm(!showForm)
                     if (!showForm) {
@@ -659,13 +660,14 @@ export function Pendaftaran({ isAdmin = false }: PendaftaranProps) {
                       }, 100)
                     }
                   }}
-                  className="bg-emerald-700 hover:bg-emerald-800 text-white px-8 sm:px-12 py-4 text-base sm:text-lg rounded-2xl font-bold shadow-lg transition-all hover:scale-105 inline-flex items-center gap-3"
-                  size="lg"
+                  className="w-full sm:w-auto min-w-0 sm:min-w-[320px] max-w-md mx-auto bg-emerald-700 hover:bg-emerald-800 text-white px-6 sm:px-10 py-3.5 sm:py-4 text-sm sm:text-base md:text-lg rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2.5 sm:gap-3 cursor-pointer text-center"
                 >
-                  <Send className="w-5 h-5" />
-                  {showForm ? "Tutup Formulir Pendaftaran" : "Isi Formulir Pendaftaran Online"}
-                </Button>
-                <p className="text-xs text-gray-500 mt-2">
+                  <Send className="w-5 h-5 shrink-0 text-emerald-200" />
+                  <span className="truncate sm:whitespace-normal">
+                    {showForm ? "Tutup Formulir Pendaftaran" : "Isi Formulir Pendaftaran Online"}
+                  </span>
+                </button>
+                <p className="text-xs sm:text-sm text-gray-500 mt-2.5 text-center">
                   {showForm ? "Klik tombol di atas untuk menyembunyikan formulir" : "Klik tombol di atas untuk membuka formulir pendaftaran santri baru"}
                 </p>
               </div>
