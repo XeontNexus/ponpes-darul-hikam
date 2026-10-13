@@ -5,19 +5,48 @@ import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://darulhikamtebo.com"
+
 export const metadata: Metadata = {
-  title: "Pondok Pesantren DARUL HIKAM",
-  description: "Sistem Informasi Pondok Pesantren DARUL HIKAM - Membentuk Generasi Qur'ani",
-  keywords: ["pondok pesantren", "darul hikam", "pendidikan islam", "santri", "pesantren"],
-  authors: [{ name: "Pondok Pesantren DARUL HIKAM" }],
-  creator: "Pondok Pesantren DARUL HIKAM",
-  publisher: "Pondok Pesantren DARUL HIKAM",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Pondok Pesantren DARUL HIKAM Tebo - Membentuk Generasi Qur'ani",
+    template: "%s | Ponpes Darul Hikam Tebo",
+  },
+  description:
+    "Website Resmi Yayasan Pondok Pesantren DARUL HIKAM, Desa Suka Damai, Kecamatan Rimbo Ulu, Kabupaten Tebo, Jambi. Informasi Penerimaan Santri Baru (PSB 2026/2027), Tahfidz Al-Qur'an, MTs, dan MA.",
+  keywords: [
+    "Pondok Pesantren Darul Hikam",
+    "Darul Hikam Tebo",
+    "Pesantren Rimbo Ulu",
+    "Ponpes Darul Hikam Jambi",
+    "PSB Darul Hikam 2026",
+    "Penerimaan Santri Baru Darul Hikam",
+    "MTs Darul Hikam",
+    "MA Darul Hikam",
+    "Tahfidz Quran Tebo",
+    "Pendidikan Islam Terpadu",
+  ],
+  authors: [{ name: "Yayasan Pondok Pesantren DARUL HIKAM" }],
+  creator: "Yayasan Pondok Pesantren DARUL HIKAM",
+  publisher: "Yayasan Pondok Pesantren DARUL HIKAM",
   formatDetection: {
     email: false,
     address: false,
     telephone: false,
   },
   manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/icons/icon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/icon-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512x512.png", sizes: "512x512", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: [
+      { url: "/icons/icon-180x180.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
@@ -26,48 +55,79 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Pondok Pesantren DARUL HIKAM",
-    title: "Pondok Pesantren DARUL HIKAM",
-    description: "Sistem Informasi Pondok Pesantren DARUL HIKAM - Membentuk Generasi Qur'ani",
+    locale: "id_ID",
+    url: siteUrl,
+    siteName: "Pondok Pesantren DARUL HIKAM Tebo",
+    title: "Pondok Pesantren DARUL HIKAM Tebo - Membentuk Generasi Qur'ani",
+    description:
+      "Website Resmi Yayasan Pondok Pesantren DARUL HIKAM, Desa Suka Damai, Kecamatan Rimbo Ulu, Kabupaten Tebo, Jambi. Informasi Penerimaan Santri Baru (PSB), Tahfidz Quran, dan Program Pendidikan Terpadu.",
     images: [
       {
-        url: "/icons/icon-512x512.png",
-        width: 512,
-        height: 512,
-        alt: "Logo Pondok Pesantren DARUL HIKAM",
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Logo Resmi Yayasan Pondok Pesantren Darul Hikam Tebo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pondok Pesantren DARUL HIKAM",
-    description: "Sistem Informasi Pondok Pesantren DARUL HIKAM - Membentuk Generasi Qur'ani",
-    images: ["/icons/icon-512x512.png"],
+    title: "Pondok Pesantren DARUL HIKAM Tebo",
+    description:
+      "Website Resmi Yayasan Pondok Pesantren DARUL HIKAM - Membentuk Generasi Qur'ani Berakhlak Mulia",
+    images: ["/og-image.png"],
   },
-  icons: {
-    icon: [
-      { url: "/icons/icon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icons/icon-16x16.png", sizes: "16x16", type: "image/png" },
-    ],
-    apple: [{ url: "/icons/icon-180x180.png", sizes: "180x180", type: "image/png" }],
-    other: [
-      {
-        rel: "mask-icon",
-        url: "/icons/safari-pinned-tab.svg",
-        color: "#166534",
-      },
-    ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
-    generator: 'v0.dev'
 }
 
 export const viewport: Viewport = {
   themeColor: "#166534",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  userScalable: true,
   viewportFit: "cover",
+}
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  name: "Yayasan Pondok Pesantren DARUL HIKAM",
+  alternateName: "Ponpes Darul Hikam Tebo",
+  url: siteUrl,
+  logo: `${siteUrl}/icons/icon-512x512.png`,
+  image: `${siteUrl}/og-image.png`,
+  description:
+    "Yayasan Pondok Pesantren DARUL HIKAM di Desa Suka Damai, Kecamatan Rimbo Ulu, Kabupaten Tebo, Jambi. Pendidikan Islam terpadu, Tahfidz Al-Qur'an, MTs, dan MA.",
+  foundingDate: "1990",
+  founder: {
+    "@type": "Person",
+    name: "KH. Rifai Ahmad, S.Pd.I",
+  },
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Jl. Teratai, Desa Suka Damai",
+    addressLocality: "Rimbo Ulu",
+    addressRegion: "Kabupaten Tebo, Jambi",
+    addressCountry: "ID",
+  },
+  sameAs: [
+    "https://youtube.com/@darulhikamtv?si=5rPvykoMigMg44NQ",
+    "https://www.instagram.com/darulhikam.sukadamai?igsh=YXduN2Z2NDFlM3l5",
+    "https://www.tiktok.com/@darulhikamtebo?_r=1&_t=ZS-98jjgRchKGw",
+    "https://www.facebook.com/profile.php?id=100081803812314&mibextid=rS40aB7S9Ucbxw6v",
+    "https://whatsapp.com/channel/0029Vb5CIK6DzgTCAQYTTS1R",
+  ],
 }
 
 export default function RootLayout({
@@ -83,9 +143,12 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="DARUL HIKAM" />
         <meta name="msapplication-TileColor" content="#166534" />
-        <meta name="msapplication-config" content="/browserconfig.xml" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

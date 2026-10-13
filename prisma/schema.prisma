@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Banner {
+  id        Int      @id @default(autoincrement())
+  title     String
+  subtitle  String?
+  image     String
+  isActive  Boolean  @default(true)
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FotoSejarah {
+  id        Int      @id @default(autoincrement())
+  title     String?
+  image     String
+  caption   String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Prestasi {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  prestasi  String
+  tingkat   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FotoKegiatan {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  deskripsi String?
+  foto      String
+  kategori  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Guru {
+  id            Int      @id @default(autoincrement())
+  nama          String
+  jabatan       String
+  unitMengajar  String
+  tahunMengajar String?
+  foto          String
+  deskripsi     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Pendaftar {
+  id             Int      @id @default(autoincrement())
+  noPendaftaran  String   @unique
+  namaSiswa      String
+  nisn           String
+  asalSekolah    String
+  namaOrangTua   String
+  noWa           String
+  email          String?
+  programPilihan String
+  status         String   @default("pending")
+  tanggalDaftar  DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model StatistikSantri {
+  id        Int      @id @default(autoincrement())
+  jenjang   String   @unique
+  jumlah    Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SantriSlide {
+  id        Int      @id @default(autoincrement())
+  kategori  String
+  title     String
+  subtitle  String?
+  image     String
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PelajaranJenjang {
+  id        Int      @id @default(autoincrement())
+  jenjang   String
+  deskripsi String?
+  mapel     String   @default("")
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model KitabKuning {
+  id        Int      @id @default(autoincrement())
+  namaKitab String
+  pengarang String?
+  bidang    String?
+  deskripsi String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Ekskul {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  kategori  String?
+  deskripsi String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model KegiatanSantri {
+  id         Int      @id @default(autoincrement())
+  judul      String
+  penjelasan String?
+  foto       String
+  kategori   String?
+  order      Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Settings {
+  id            Int      @id @default(autoincrement())
+  facebookUrl   String?
+  instagramUrl  String?
+  youtubeUrl    String?
+  address       String?
+  email         String?
+  phone         String?
+  heroTitle     String?
+  heroSubtitle  String?
+  heroParagraph String?
+  sejarahSingkatParagraph String?
+  sejarahLainnyaParagraph String?
+  pengasuhNama   String?
+  pengasuhJabatan String?
+  pengasuhPeriode String?
+  pengasuhBiografi String?
+  pengasuhFoto    String?
+  santriBudaya1 String?
+  santriBudaya2 String?
+  updatedAt      DateTime @updatedAt
+}

@@ -1,13 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Header } from "@/components/header"
 import { Home } from "@/components/home"
 import { Prestasi } from "@/components/prestasi"
 import { Organisasi } from "@/components/organisasi"
 import { Santri } from "@/components/santri"
-import { InfoLainnya } from "@/components/info-lainnya"
-import { Login } from "@/components/login"
 import { Footer } from "@/components/footer"
 import { AdminPanel } from "@/components/admin-panel"
 import { Pendaftaran } from "@/components/pendaftaran"
@@ -19,6 +17,11 @@ export default function Page() {
   const [userRole, setUserRole] = useState("")
   const [showAdminPanel, setShowAdminPanel] = useState(false)
 
+  // Otomatis scroll ke bagian atas halaman setiap kali menu/seksi berubah
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }, [activeSection, showAdminPanel])
+
   const renderSection = () => {
     if (showAdminPanel && userRole === "admin") {
       return <AdminPanel setShowAdminPanel={setShowAdminPanel} />
@@ -26,17 +29,13 @@ export default function Page() {
 
     switch (activeSection) {
       case "home":
-        return <Home isAdmin={userRole === "admin"} />
+        return <Home isAdmin={userRole === "admin"} setActiveSection={setActiveSection} />
       case "prestasi":
         return <Prestasi isAdmin={userRole === "admin"} />
       case "organisasi":
         return <Organisasi isAdmin={userRole === "admin"} />
       case "santri":
         return <Santri isAdmin={userRole === "admin"} />
-      case "info-lainnya":
-        return <InfoLainnya isAdmin={userRole === "admin"} />
-      case "masuk":
-        return <Login setIsLoggedIn={setIsLoggedIn} setUserRole={setUserRole} />
       case "pendaftaran":
         return <Pendaftaran isAdmin={userRole === "admin"} />
       case "database":
@@ -58,7 +57,7 @@ export default function Page() {
         setShowAdminPanel={setShowAdminPanel}
       />
       {renderSection()}
-      <Footer />
+      <Footer setActiveSection={setActiveSection} />
     </div>
   )
 }

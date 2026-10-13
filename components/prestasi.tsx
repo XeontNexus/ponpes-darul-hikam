@@ -1,23 +1,52 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Trophy, Edit, Save, X, Plus, Trash2 } from "lucide-react"
-import Image from "next/image"
 import { Textarea } from "@/components/ui/textarea"
+import { Award, Edit, Save, X, Plus, Trash2, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react"
+import Image from "next/image"
 
-interface PrestasiItem {
+interface SlidePhotoItem {
   id: number
-  nama: string
-  prestasi: string
-  tahun: string
-  foto?: string
+  title: string
+  caption: string
+  image: string
 }
+
+const DEFAULT_SLIDE_PHOTOS: SlidePhotoItem[] = [
+  {
+    id: 1,
+    title: "Awal Berdiri (1994)",
+    caption: "Peletakan batu pertama dan rintisan awal oleh KH. Ahmad Dahlan bersama tokoh masyarakat.",
+    image: "/images/sejarah1.png",
+  },
+  {
+    id: 2,
+    title: "Pembangunan Masjid & Asrama (2000)",
+    caption: "Tahap perluasan fasilitas fisik untuk menampung pertumbuhan jumlah santri yang kian meningkat.",
+    image: "/images/sejarah2.png",
+  },
+  {
+    id: 3,
+    title: "Pendirian MTs & MA (2005 - 2010)",
+    caption: "Formalisasi jenjang pendidikan menengah pertama dan atas terakreditasi unggul.",
+    image: "/images/sejarah3.png",
+  },
+  {
+    id: 4,
+    title: "Pendirian SMK Kejuruan (2015)",
+    caption: "Pembukaan SMK Darul Hikam guna membekali santri dengan keahlian vokasi dan teknis.",
+    image: "/images/sejarah4.png",
+  },
+  {
+    id: 5,
+    title: "Transformasi Digital (2020 - Sekarang)",
+    caption: "Penerapan sistem pembelajaran berbasis IT dan laboratorium komputer terpadu.",
+    image: "/images/sejarah5.png",
+  },
+]
 
 interface FotoItem {
   id: number
@@ -26,327 +55,181 @@ interface FotoItem {
   foto: string
 }
 
-interface PrestasiProps {
-  isAdmin: boolean
+interface PencapaianTextItem {
+  id: number
+  nama: string
+  prestasi: string
+  tingkat?: string
 }
 
-export function Prestasi({ isAdmin }: PrestasiProps) {
-  const [prestasiPutra, setPrestasiPutra] = useState({
-    paud: [
-      {
-        id: 1,
-        nama: "Ahmad Fauzi",
-        prestasi: "Juara 1 Lomba Hafalan Surat Pendek",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 2,
-        nama: "Muhammad Rizki",
-        prestasi: "Juara 2 Lomba Mewarnai Islami",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    sd: [
-      {
-        id: 3,
-        nama: "Abdullah Rahman",
-        prestasi: "Juara 1 Olimpiade Matematika Tingkat Kabupaten",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 4,
-        nama: "Umar Faruq",
-        prestasi: "Juara 3 Lomba Pidato Bahasa Arab",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    mts: [
-      {
-        id: 5,
-        nama: "Ali Akbar",
-        prestasi: "Juara 1 Lomba Tahfidz Al-Qur'an Tingkat Provinsi",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 6,
-        nama: "Hasan Basri",
-        prestasi: "Juara 2 Olimpiade Fisika Tingkat Nasional",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    ma: [
-      {
-        id: 7,
-        nama: "Ibrahim Khalil",
-        prestasi: "Juara 1 Lomba Karya Tulis Ilmiah Islami",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 8,
-        nama: "Yusuf Mansur",
-        prestasi: "Juara 3 Debat Bahasa Inggris Tingkat Nasional",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    smk: [
-      {
-        id: 9,
-        nama: "Ridwan Kamil",
-        prestasi: "Juara 1 Lomba Desain Grafis Tingkat Provinsi",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 10,
-        nama: "Fahmi Idris",
-        prestasi: "Juara 2 Lomba Programming Tingkat Nasional",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-  })
+interface PrestasiProps {
+  isAdmin?: boolean
+}
 
-  const [prestasiPutri, setPrestasiPutri] = useState({
-    paud: [
-      {
-        id: 11,
-        nama: "Aisyah Nur",
-        prestasi: "Juara 1 Lomba Adzan Putri",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 12,
-        nama: "Fatimah Zahra",
-        prestasi: "Juara 2 Lomba Kaligrafi",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    sd: [
-      {
-        id: 13,
-        nama: "Khadijah Ummul",
-        prestasi: "Juara 1 Olimpiade IPA Tingkat Kabupaten",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 14,
-        nama: "Maryam Siddiq",
-        prestasi: "Juara 3 Lomba Baca Puisi Islami",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    mts: [
-      {
-        id: 15,
-        nama: "Zainab Kubra",
-        prestasi: "Juara 1 Lomba Tahfidz Al-Qur'an Putri Tingkat Provinsi",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 16,
-        nama: "Ruqayyah Binti",
-        prestasi: "Juara 2 Olimpiade Biologi Tingkat Nasional",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    ma: [
-      {
-        id: 17,
-        nama: "Ummu Salamah",
-        prestasi: "Juara 1 Lomba Esai Islami Tingkat Nasional",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 18,
-        nama: "Hafsah Umar",
-        prestasi: "Juara 3 Lomba Presentasi Bahasa Arab",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-    smk: [
-      {
-        id: 19,
-        nama: "Safiyyah Ahmad",
-        prestasi: "Juara 1 Lomba Tata Busana Islami",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-      {
-        id: 20,
-        nama: "Ummu Kultsum",
-        prestasi: "Juara 2 Lomba Akuntansi Tingkat Provinsi",
-        tahun: "2024",
-        foto: "/placeholder.svg?height=100&width=100",
-      },
-    ],
-  })
+export function Prestasi({ isAdmin = false }: PrestasiProps) {
+  // Slideshow Photos State (Moved from Home)
+  const [slidePhotos, setSlidePhotos] = useState<SlidePhotoItem[]>(DEFAULT_SLIDE_PHOTOS)
+  const [currentSlidePhoto, setCurrentSlidePhoto] = useState(0)
 
+  useEffect(() => {
+    fetch("/api/foto-sejarah")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setSlidePhotos(data.map((item) => ({ ...item, title: item.title || "Dokumentasi Darul Hikam", caption: item.caption || "" })))
+        }
+      })
+      .catch(() => { /* keep default slide photos */ })
+  }, [])
+
+  useEffect(() => {
+    if (slidePhotos.length === 0) return
+    const timer = setInterval(() => {
+      setCurrentSlidePhoto((prev) => (prev + 1) % slidePhotos.length)
+    }, 6000)
+    return () => clearInterval(timer)
+  }, [slidePhotos.length])
+
+  const nextSlidePhoto = () => {
+    if (slidePhotos.length === 0) return
+    setCurrentSlidePhoto((prev) => (prev + 1) % slidePhotos.length)
+  }
+
+  const prevSlidePhoto = () => {
+    if (slidePhotos.length === 0) return
+    setCurrentSlidePhoto((prev) => (prev - 1 + slidePhotos.length) % slidePhotos.length)
+  }
+
+  // Dokumentasi Foto State
   const [dokumentasiFoto, setDokumentasiFoto] = useState<FotoItem[]>([
     {
       id: 1,
-      nama: "Kegiatan Tahfidz",
-      deskripsi: "Santri sedang mengikuti kegiatan tahfidz Al-Qur'an",
-      foto: "/placeholder.svg?height=300&width=400",
+      nama: "Kegiatan Tahfidz Al-Qur'an",
+      deskripsi: "Santri sedang mengikuti setoran dan muraja'ah hafalan Al-Qur'an harian.",
+      foto: "/images/banner2.png",
     },
     {
       id: 2,
-      nama: "Lomba Sains",
-      deskripsi: "Santri mengikuti olimpiade sains tingkat provinsi",
-      foto: "/placeholder.svg?height=300&width=400",
+      nama: "Olimpiade Sains & Keagamaan",
+      deskripsi: "Dokumentasi keikutsertaan santri dalam olimpiade tingkat kabupaten & provinsi.",
+      foto: "/images/banner5.png",
     },
     {
       id: 3,
-      nama: "Wisuda Santri",
-      deskripsi: "Acara wisuda santri yang telah menyelesaikan program",
-      foto: "/placeholder.svg?height=300&width=400",
+      nama: "Wisuda & Haflah Akhirussanah",
+      deskripsi: "Prosesi wisuda kelulusan santri dan penyerahan penghargaan santri berprestasi.",
+      foto: "/images/banner1.png",
     },
   ])
-
-  const [editingItem, setEditingItem] = useState<PrestasiItem | null>(null)
-  const [editingGender, setEditingGender] = useState<"putra" | "putri" | null>(null)
-  const [editingLevel, setEditingLevel] = useState<string | null>(null)
-  const [showAddForm, setShowAddForm] = useState(false)
-  const [newItem, setNewItem] = useState<Omit<PrestasiItem, "id">>({
-    nama: "",
-    prestasi: "",
-    tahun: "",
-    foto: "/placeholder.svg?height=100&width=100",
-  })
-  const [newGender, setNewGender] = useState<"putra" | "putri">("putra")
-  const [newLevel, setNewLevel] = useState<string>("paud")
-  const [uploadingImage, setUploadingImage] = useState<number | null>(null)
 
   const [editingFoto, setEditingFoto] = useState<FotoItem | null>(null)
   const [showAddFotoForm, setShowAddFotoForm] = useState(false)
   const [newFoto, setNewFoto] = useState<Omit<FotoItem, "id">>({
     nama: "",
     deskripsi: "",
-    foto: "/placeholder.svg?height=300&width=400",
+    foto: "/images/banner1.png",
+  })
+  const [uploadingImage, setUploadingImage] = useState<number | null>(null)
+
+  // Beberapa Pencapaian Lainnya State (Text List)
+  const [pencapaianLainnya, setPencapaianLainnya] = useState<PencapaianTextItem[]>([
+    {
+      id: 1,
+      nama: "Abdul Roni",
+      prestasi: "Juara Tilawah Tingkat Kabupaten",
+      tingkat: "Kabupaten",
+    },
+    {
+      id: 2,
+      nama: "Gilang",
+      prestasi: "Juara Qori Internasional",
+      tingkat: "Internasional",
+    },
+    {
+      id: 3,
+      nama: "Muhammad Irfan",
+      prestasi: "Juara 1 Tahfidz 30 Juz",
+      tingkat: "Provinsi",
+    },
+    {
+      id: 4,
+      nama: "Aisyah Nur",
+      prestasi: "Juara 1 Kaligrafi Islami",
+      tingkat: "Nasional",
+    },
+    {
+      id: 5,
+      nama: "Fahmi & Tim",
+      prestasi: "Juara 1 Lomba Programming & Web Design",
+      tingkat: "Nasional",
+    },
+    {
+      id: 6,
+      nama: "Siti Fatimah",
+      prestasi: "Juara 1 Pidato Bahasa Arab",
+      tingkat: "Kabupaten",
+    },
+  ])
+
+  const [editingPencapaian, setEditingPencapaian] = useState<PencapaianTextItem | null>(null)
+  const [showAddPencapaianForm, setShowAddPencapaianForm] = useState(false)
+  const [newPencapaian, setNewPencapaian] = useState<Omit<PencapaianTextItem, "id">>({
+    nama: "",
+    prestasi: "",
+    tingkat: "",
   })
 
-  const handleEdit = (item: PrestasiItem, gender: "putra" | "putri", level: string) => {
-    setEditingItem({ ...item })
-    setEditingGender(gender)
-    setEditingLevel(level)
-  }
-
-  const handleSave = () => {
-    if (editingItem && editingGender && editingLevel) {
-      if (editingGender === "putra") {
-        setPrestasiPutra((prev) => ({
-          ...prev,
-          [editingLevel]: prev[editingLevel as keyof typeof prev].map((item) =>
-            item.id === editingItem.id ? editingItem : item,
-          ),
-        }))
-      } else {
-        setPrestasiPutri((prev) => ({
-          ...prev,
-          [editingLevel]: prev[editingLevel as keyof typeof prev].map((item) =>
-            item.id === editingItem.id ? editingItem : item,
-          ),
-        }))
-      }
-      setEditingItem(null)
-      setEditingGender(null)
-      setEditingLevel(null)
-    }
-  }
-
-  const handleDelete = (id: number, gender: "putra" | "putri", level: string) => {
-    if (gender === "putra") {
-      setPrestasiPutra((prev) => ({
-        ...prev,
-        [level]: prev[level as keyof typeof prev].filter((item) => item.id !== id),
-      }))
-    } else {
-      setPrestasiPutri((prev) => ({
-        ...prev,
-        [level]: prev[level as keyof typeof prev].filter((item) => item.id !== id),
-      }))
-    }
-  }
-
-  const handleAdd = () => {
-    if (newItem.nama && newItem.prestasi && newItem.tahun) {
-      const itemWithId = { ...newItem, id: Date.now() }
-      if (newGender === "putra") {
-        setPrestasiPutra((prev) => ({
-          ...prev,
-          [newLevel]: [...prev[newLevel as keyof typeof prev], itemWithId],
-        }))
-      } else {
-        setPrestasiPutri((prev) => ({
-          ...prev,
-          [newLevel]: [...prev[newLevel as keyof typeof prev], itemWithId],
-        }))
-      }
-      setNewItem({
-        nama: "",
-        prestasi: "",
-        tahun: "",
-        foto: "/placeholder.svg?height=100&width=100",
+  useEffect(() => {
+    fetch("/api/prestasi")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) setPencapaianLainnya(data)
       })
-      setShowAddForm(false)
-    }
-  }
+      .catch(() => { /* keep fallback achievements */ })
 
-  const handleImageUpload = (file: File, itemId: number, gender: "putra" | "putri", level: string) => {
-    if (file && file.type.startsWith("image/")) {
-      setUploadingImage(itemId)
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        const imageUrl = e.target?.result as string
-        if (gender === "putra") {
-          setPrestasiPutra((prev) => ({
-            ...prev,
-            [level]: prev[level as keyof typeof prev].map((item) =>
-              item.id === itemId ? { ...item, foto: imageUrl } : item,
-            ),
-          }))
-        } else {
-          setPrestasiPutri((prev) => ({
-            ...prev,
-            [level]: prev[level as keyof typeof prev].map((item) =>
-              item.id === itemId ? { ...item, foto: imageUrl } : item,
-            ),
-          }))
+    fetch("/api/foto-kegiatan")
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setDokumentasiFoto(data.map((item) => ({ id: item.id, nama: item.nama, deskripsi: item.deskripsi || "", foto: item.foto })))
         }
-        setUploadingImage(null)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
+      })
+      .catch(() => { /* keep fallback documentation photos */ })
+  }, [])
 
+  // Foto Handlers
   const handleEditFoto = (foto: FotoItem) => {
     setEditingFoto({ ...foto })
   }
 
-  const handleSaveFoto = () => {
-    if (editingFoto) {
-      setDokumentasiFoto((prev) => prev.map((item) => (item.id === editingFoto.id ? editingFoto : item)))
+  const handleSaveFoto = async () => {
+    if (!editingFoto) return
+    try {
+      let foto = editingFoto.foto
+      if (foto.startsWith("data:image/")) {
+        const upload = await fetch("/api/upload", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ image: foto, folder: "prestasi" }) })
+        const uploadData = await upload.json()
+        if (!upload.ok || !uploadData.url) throw new Error(uploadData.error || "Upload foto gagal")
+        foto = uploadData.url
+      }
+      const response = await fetch("/api/foto-kegiatan", { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: editingFoto.id, nama: editingFoto.nama, deskripsi: editingFoto.deskripsi, foto }) })
+      const saved = await response.json()
+      if (!response.ok) throw new Error(saved.error || "Gagal menyimpan foto")
+      setDokumentasiFoto((prev) => prev.map((item) => (item.id === editingFoto.id ? saved : item)))
       setEditingFoto(null)
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Gagal menyimpan foto")
     }
   }
 
-  const handleDeleteFoto = (id: number) => {
-    setDokumentasiFoto((prev) => prev.filter((item) => item.id !== id))
+  const handleDeleteFoto = async (id: number) => {
+    try {
+      const response = await fetch("/api/foto-kegiatan", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) })
+      if (!response.ok) throw new Error("Gagal menghapus foto")
+      setDokumentasiFoto((prev) => prev.filter((item) => item.id !== id))
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Gagal menghapus foto")
+    }
   }
 
   const handleAddFoto = () => {
@@ -356,7 +239,7 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
       setNewFoto({
         nama: "",
         deskripsi: "",
-        foto: "/placeholder.svg?height=300&width=400",
+        foto: "/images/banner1.png",
       })
       setShowAddFotoForm(false)
     }
@@ -375,183 +258,128 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
     }
   }
 
-  const renderPrestasi = (data: any, gender: "putra" | "putri") => {
-    return (
-      <div className="space-y-4 sm:space-y-6">
-        {Object.entries(data).map(([tingkat, prestasi]: [string, any]) => (
-          <Card key={tingkat} className="border-green-200">
-            <CardHeader>
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <CardTitle className="text-green-800 flex items-center gap-2 text-lg sm:text-xl">
-                  <Trophy className="w-5 h-5 flex-shrink-0" />
-                  {tingkat.toUpperCase()}
-                </CardTitle>
-                {isAdmin && (
-                  <Button
-                    onClick={() => {
-                      setNewGender(gender)
-                      setNewLevel(tingkat)
-                      setShowAddForm(true)
-                    }}
-                    size="sm"
-                    className="bg-green-700 hover:bg-green-800 w-full sm:w-auto"
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Tambah
-                  </Button>
-                )}
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-3 sm:gap-4">
-                {prestasi.map((item: PrestasiItem) => (
+  // Pencapaian Handlers
+  const handleEditPencapaian = (item: PencapaianTextItem) => {
+    setEditingPencapaian({ ...item })
+  }
+
+  const handleSavePencapaian = () => {
+    if (editingPencapaian) {
+      setPencapaianLainnya((prev) => prev.map((item) => (item.id === editingPencapaian.id ? editingPencapaian : item)))
+      setEditingPencapaian(null)
+    }
+  }
+
+  const handleDeletePencapaian = (id: number) => {
+    setPencapaianLainnya((prev) => prev.filter((item) => item.id !== id))
+  }
+
+  const handleAddPencapaian = () => {
+    if (newPencapaian.nama && newPencapaian.prestasi) {
+      setPencapaianLainnya((prev) => [...prev, { ...newPencapaian, id: Date.now() }])
+      setNewPencapaian({ nama: "", prestasi: "", tingkat: "" })
+      setShowAddPencapaianForm(false)
+    }
+  }
+
+  return (
+    <section className="py-10 sm:py-16 lg:py-20 bg-green-50/50 animate-in fade-in slide-in-from-bottom-4 zoom-in-95 duration-700 ease-out">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Title */}
+        <div className="text-center mb-10 sm:mb-14">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-800 mb-3">
+            Pencapaian Santri
+          </h1>
+          <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Dokumentasi serta berbagai pencapaian membanggakan yang telah diraih oleh santri Pondok Pesantren DARUL HIKAM.
+          </p>
+        </div>
+
+        {/* Photo Slideshow Section (Dipindahkan dari Home) */}
+        <div className="max-w-5xl mx-auto mb-14 sm:mb-18">
+          <Card className="overflow-hidden border-2 border-green-200 shadow-xl rounded-2xl bg-white">
+            <CardContent className="p-4 sm:p-6">
+              <div className="relative h-[260px] sm:h-[360px] md:h-[420px] rounded-xl overflow-hidden mb-4">
+                {slidePhotos.map((photo, idx) => (
                   <div
-                    key={item.id}
-                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 bg-green-50 rounded-lg gap-4"
+                    key={photo.id}
+                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                      idx === currentSlidePhoto ? "opacity-100 scale-100 z-10" : "opacity-0 scale-95 z-0 pointer-events-none"
+                    }`}
                   >
-                    <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto">
-                      <div className="relative flex-shrink-0">
-                        <img
-                          src={item.foto || "/placeholder.svg"}
-                          alt={item.nama}
-                          className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover"
-                        />
-                        {isAdmin && (
-                          <div className="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity rounded-full flex items-center justify-center">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0]
-                                if (file) handleImageUpload(file, item.id, gender, tingkat)
-                              }}
-                              className="hidden"
-                              id={`upload-prestasi-${item.id}`}
-                            />
-                            <label
-                              htmlFor={`upload-prestasi-${item.id}`}
-                              className="text-white text-xs cursor-pointer touch-manipulation"
-                            >
-                              📷
-                            </label>
-                          </div>
-                        )}
-                        {uploadingImage === item.id && (
-                          <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-full">
-                            <span className="text-white text-xs">...</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        {editingItem?.id === item.id ? (
-                          <div className="space-y-2">
-                            <Input
-                              value={editingItem.nama}
-                              onChange={(e) => setEditingItem({ ...editingItem, nama: e.target.value })}
-                              placeholder="Nama"
-                              className="text-sm sm:text-base"
-                            />
-                            <Input
-                              value={editingItem.prestasi}
-                              onChange={(e) => setEditingItem({ ...editingItem, prestasi: e.target.value })}
-                              placeholder="Prestasi"
-                              className="text-sm sm:text-base"
-                            />
-                            <Input
-                              value={editingItem.tahun}
-                              onChange={(e) => setEditingItem({ ...editingItem, tahun: e.target.value })}
-                              placeholder="Tahun"
-                              className="text-sm sm:text-base"
-                            />
-                          </div>
-                        ) : (
-                          <>
-                            <h4 className="font-semibold text-green-800 text-sm sm:text-base">{item.nama}</h4>
-                            <p className="text-gray-700 text-sm leading-relaxed">{item.prestasi}</p>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-2 w-full sm:w-auto">
-                      {editingItem?.id === item.id ? (
-                        <>
-                          <Button
-                            size="sm"
-                            onClick={handleSave}
-                            className="bg-green-700 hover:bg-green-800 flex-1 sm:flex-none"
-                          >
-                            <Save className="w-4 h-4" />
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => setEditingItem(null)}
-                            className="flex-1 sm:flex-none"
-                          >
-                            <X className="w-4 h-4" />
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <Badge variant="secondary" className="bg-green-100 text-green-800 text-xs sm:text-sm">
-                            {item.tahun}
-                          </Badge>
-                          {isAdmin && (
-                            <div className="flex gap-1">
-                              <Button size="sm" variant="outline" onClick={() => handleEdit(item, gender, tingkat)}>
-                                <Edit className="w-4 h-4" />
-                              </Button>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => handleDelete(item.id, gender, tingkat)}
-                                className="text-red-600 hover:text-red-700"
-                              >
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            </div>
-                          )}
-                        </>
-                      )}
+                    <Image
+                      src={photo.image}
+                      alt={photo.title}
+                      fill
+                      className="object-cover w-full h-full"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent flex flex-col justify-end p-4 sm:p-6 text-white">
+                      <h4 className="text-lg sm:text-2xl font-bold drop-shadow-md">{photo.title}</h4>
+                      <p className="text-xs sm:text-sm text-gray-200 mt-1 drop-shadow leading-relaxed">{photo.caption}</p>
                     </div>
                   </div>
+                ))}
+
+                {/* Slider Arrows */}
+                <button
+                  onClick={prevSlidePhoto}
+                  className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all bg-black/30 hover:bg-black/50 p-1.5 sm:p-2 rounded-full backdrop-blur-sm"
+                  aria-label="Previous Photo"
+                >
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-md" />
+                </button>
+                <button
+                  onClick={nextSlidePhoto}
+                  className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 z-20 text-white/80 hover:text-white transition-all bg-black/30 hover:bg-black/50 p-1.5 sm:p-2 rounded-full backdrop-blur-sm"
+                  aria-label="Next Photo"
+                >
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 drop-shadow-md" />
+                </button>
+              </div>
+
+              {/* Photo Thumbnails / Controls */}
+              <div className="grid grid-cols-5 gap-2 sm:gap-3">
+                {slidePhotos.map((photo, idx) => (
+                  <button
+                    key={photo.id}
+                    onClick={() => setCurrentSlidePhoto(idx)}
+                    className={`relative h-14 sm:h-20 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                      idx === currentSlidePhoto ? "border-green-600 ring-2 ring-green-400 scale-105" : "border-transparent opacity-60 hover:opacity-100"
+                    }`}
+                  >
+                    <Image
+                      src={photo.image}
+                      alt={photo.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </button>
                 ))}
               </div>
             </CardContent>
           </Card>
-        ))}
-      </div>
-    )
-  }
-
-  return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-green-50">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 sm:mb-16">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-green-800 mb-4">Prestasi Santri</h1>
-          <p className="text-base sm:text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Berbagai prestasi membanggakan yang telah diraih oleh santri-santri Pondok Pesantren DARUL HIKAM di berbagai
-            bidang dan tingkat pendidikan.
-          </p>
         </div>
 
-        {/* Dokumentasi Foto */}
-        <div className="mb-8 sm:mb-12">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+        {/* 1. Dokumentasi Foto (Bentuk Chart / Kotak Grid) */}
+        <div className="mb-14 sm:mb-18">
+          <div className="text-center mb-6">
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-green-800">Dokumentasi Foto</h2>
+            <p className="text-sm sm:text-base text-gray-600 mt-1">Galeri foto kegiatan dan momen berharga prestasi pesantren</p>
             {isAdmin && (
-              <Button
-                onClick={() => setShowAddFotoForm(!showAddFotoForm)}
-                disabled={dokumentasiFoto.length >= 5}
-                className="bg-green-700 hover:bg-green-800 w-full sm:w-auto"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                Tambah Foto ({dokumentasiFoto.length}/5)
-              </Button>
+              <div className="mt-3 flex justify-center">
+                <Button
+                  onClick={() => setShowAddFotoForm(!showAddFotoForm)}
+                  disabled={dokumentasiFoto.length >= 5}
+                  className="bg-green-700 hover:bg-green-800"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Tambah Foto ({dokumentasiFoto.length}/5)
+                </Button>
+              </div>
             )}
           </div>
 
-          {/* Add Foto Form */}
+          {/* Add Foto Form (Admin) */}
           {showAddFotoForm && isAdmin && (
             <Card className="mb-6 border-green-200">
               <CardHeader>
@@ -613,25 +441,25 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
             </Card>
           )}
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* Grid Chart Box Foto */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {dokumentasiFoto.map((foto) => (
-              <Card key={foto.id} className="border-green-200 hover:shadow-lg transition-shadow">
-                <div className="relative">
+              <Card key={foto.id} className="border-2 border-green-200 hover:border-green-400 hover:shadow-xl transition-all duration-300 rounded-2xl overflow-hidden bg-white">
+                <div className="relative h-48 sm:h-56 w-full">
                   <Image
                     src={foto.foto || "/placeholder.svg"}
                     alt={foto.nama}
-                    width={400}
-                    height={300}
-                    className="w-full h-40 sm:h-48 object-cover rounded-t-lg"
+                    fill
+                    className="object-cover"
                   />
                   {isAdmin && (
                     <>
-                      <div className="absolute top-2 right-2 flex gap-1">
+                      <div className="absolute top-2 right-2 flex gap-1 z-10">
                         <Button
                           size="sm"
                           variant="outline"
                           onClick={() => handleEditFoto(foto)}
-                          className="bg-white/80 hover:bg-white p-2"
+                          className="bg-white/90 hover:bg-white p-2 text-green-800"
                         >
                           <Edit className="w-3 h-3" />
                         </Button>
@@ -639,12 +467,12 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
                           size="sm"
                           variant="outline"
                           onClick={() => handleDeleteFoto(foto.id)}
-                          className="bg-white/80 hover:bg-white text-red-600 hover:text-red-700 p-2"
+                          className="bg-white/90 hover:bg-white text-red-600 hover:text-red-700 p-2"
                         >
                           <Trash2 className="w-3 h-3" />
                         </Button>
                       </div>
-                      <div className="absolute bottom-2 left-2">
+                      <div className="absolute bottom-2 left-2 z-10">
                         <input
                           type="file"
                           accept="image/*"
@@ -657,7 +485,7 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
                         />
                         <label
                           htmlFor={`upload-foto-${foto.id}`}
-                          className="bg-white/90 hover:bg-white text-green-800 px-2 py-1 rounded text-xs cursor-pointer flex items-center gap-1 touch-manipulation"
+                          className="bg-white/90 hover:bg-white text-green-800 px-2 py-1 rounded text-xs cursor-pointer flex items-center gap-1 touch-manipulation font-medium shadow"
                         >
                           📷 Ganti Foto
                         </label>
@@ -665,12 +493,12 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
                     </>
                   )}
                   {uploadingImage === foto.id && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center rounded-t-lg">
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
                       <span className="text-white text-sm">Uploading...</span>
                     </div>
                   )}
                 </div>
-                <CardContent className="p-3 sm:p-4">
+                <CardContent className="p-4 sm:p-5">
                   {editingFoto?.id === foto.id ? (
                     <div className="space-y-3">
                       <Input
@@ -684,12 +512,6 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
                         onChange={(e) => setEditingFoto({ ...editingFoto, deskripsi: e.target.value })}
                         placeholder="Deskripsi"
                         rows={3}
-                        className="text-sm sm:text-base"
-                      />
-                      <Input
-                        value={editingFoto.foto}
-                        onChange={(e) => setEditingFoto({ ...editingFoto, foto: e.target.value })}
-                        placeholder="URL Foto"
                         className="text-sm sm:text-base"
                       />
                       <div className="flex flex-col sm:flex-row gap-2">
@@ -714,7 +536,7 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
                     </div>
                   ) : (
                     <>
-                      <h3 className="font-semibold text-green-800 mb-2 text-sm sm:text-base">{foto.nama}</h3>
+                      <h3 className="font-bold text-green-800 mb-1.5 text-base sm:text-lg">{foto.nama}</h3>
                       <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{foto.deskripsi}</p>
                     </>
                   )}
@@ -724,107 +546,131 @@ export function Prestasi({ isAdmin }: PrestasiProps) {
           </div>
         </div>
 
-        {/* Add Form */}
-        {showAddForm && isAdmin && (
-          <Card className="mb-6 sm:mb-8 border-green-200">
-            <CardHeader>
-              <CardTitle className="text-green-800 text-lg sm:text-xl">Tambah Prestasi Baru</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Select value={newGender} onValueChange={(value: "putra" | "putri") => setNewGender(value)}>
-                  <SelectTrigger className="text-base">
-                    <SelectValue placeholder="Pilih Gender" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="putra">Santri Putra</SelectItem>
-                    <SelectItem value="putri">Santri Putri</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select value={newLevel} onValueChange={setNewLevel}>
-                  <SelectTrigger className="text-base">
-                    <SelectValue placeholder="Pilih Tingkat" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="paud">PAUD</SelectItem>
-                    <SelectItem value="sd">SD/IT</SelectItem>
-                    <SelectItem value="mts">MTs</SelectItem>
-                    <SelectItem value="ma">MA</SelectItem>
-                    <SelectItem value="smk">SMK</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Input
-                  placeholder="Nama Santri"
-                  value={newItem.nama}
-                  onChange={(e) => setNewItem({ ...newItem, nama: e.target.value })}
-                  className="text-base"
-                />
-                <Input
-                  placeholder="Tahun"
-                  value={newItem.tahun}
-                  onChange={(e) => setNewItem({ ...newItem, tahun: e.target.value })}
-                  className="text-base"
-                />
-                <div className="sm:col-span-2">
-                  <Input
-                    placeholder="Prestasi"
-                    value={newItem.prestasi}
-                    onChange={(e) => setNewItem({ ...newItem, prestasi: e.target.value })}
-                    className="text-base"
-                  />
-                </div>
-                <Input
-                  placeholder="URL Foto"
-                  value={newItem.foto}
-                  onChange={(e) => setNewItem({ ...newItem, foto: e.target.value })}
-                  className="text-base"
-                />
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-gray-600">atau</span>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        const reader = new FileReader()
-                        reader.onload = (e) => {
-                          setNewItem({ ...newItem, foto: e.target?.result as string })
-                        }
-                        reader.readAsDataURL(file)
-                      }
-                    }}
-                    className="text-sm flex-1"
-                  />
-                </div>
-                <div className="flex flex-col sm:flex-row gap-2 sm:col-span-2">
-                  <Button onClick={handleAdd} className="bg-green-700 hover:bg-green-800 flex-1 sm:flex-none">
-                    <Save className="w-4 h-4 mr-2" />
-                    Simpan
-                  </Button>
-                  <Button variant="outline" onClick={() => setShowAddForm(false)} className="flex-1 sm:flex-none">
-                    <X className="w-4 h-4 mr-2" />
-                    Batal
-                  </Button>
-                </div>
+        {/* 2. Sub Judul: Beberapa Pencapaian Lainnya (Isi Tulisan List) */}
+        <div className="max-w-4xl mx-auto bg-white rounded-2xl border-2 border-green-200 p-6 sm:p-8 shadow-md">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 pb-4 border-b border-green-100 gap-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2.5 bg-green-100 text-green-800 rounded-xl">
+                <Award className="w-6 h-6" />
               </div>
-            </CardContent>
-          </Card>
-        )}
+              <div>
+                <h2 className="text-xl sm:text-2xl font-bold text-green-800">Beberapa Pencapaian Lainnya</h2>
+                <p className="text-xs sm:text-sm text-gray-500">Daftar kejuaraan dan perlombaan yang berhasil diraih santri</p>
+              </div>
+            </div>
+            {isAdmin && (
+              <Button
+                onClick={() => setShowAddPencapaianForm(!showAddPencapaianForm)}
+                className="bg-green-700 hover:bg-green-800 w-full sm:w-auto"
+                size="sm"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Tambah Pencapaian
+              </Button>
+            )}
+          </div>
 
-        <Tabs defaultValue="putra" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6 sm:mb-8 h-auto">
-            <TabsTrigger value="putra" className="text-base sm:text-lg py-3">
-              Santri Putra
-            </TabsTrigger>
-            <TabsTrigger value="putri" className="text-base sm:text-lg py-3">
-              Santri Putri
-            </TabsTrigger>
-          </TabsList>
+          {/* Add Form Pencapaian (Admin) */}
+          {showAddPencapaianForm && isAdmin && (
+            <div className="mb-6 p-4 bg-green-50 rounded-xl border border-green-200">
+              <h3 className="text-sm font-bold text-green-800 mb-3">Tambah Pencapaian Baru</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                <Input
+                  placeholder="Nama Santri (cth: Abdul Roni)"
+                  value={newPencapaian.nama}
+                  onChange={(e) => setNewPencapaian({ ...newPencapaian, nama: e.target.value })}
+                />
+                <Input
+                  placeholder="Judul Prestasi (cth: Juara Tilawah)"
+                  value={newPencapaian.prestasi}
+                  onChange={(e) => setNewPencapaian({ ...newPencapaian, prestasi: e.target.value })}
+                />
+                <Input
+                  placeholder="Tingkat (cth: Kabupaten / Internasional)"
+                  value={newPencapaian.tingkat}
+                  onChange={(e) => setNewPencapaian({ ...newPencapaian, tingkat: e.target.value })}
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button size="sm" onClick={handleAddPencapaian} className="bg-green-700 hover:bg-green-800">
+                  <Save className="w-3.5 h-3.5 mr-1" /> Simpan
+                </Button>
+                <Button size="sm" variant="outline" onClick={() => setShowAddPencapaianForm(false)}>
+                  <X className="w-3.5 h-3.5 mr-1" /> Batal
+                </Button>
+              </div>
+            </div>
+          )}
 
-          <TabsContent value="putra">{renderPrestasi(prestasiPutra, "putra")}</TabsContent>
-          <TabsContent value="putri">{renderPrestasi(prestasiPutri, "putri")}</TabsContent>
-        </Tabs>
+          {/* List Tulisan Pencapaian */}
+          <div className="space-y-3">
+            {pencapaianLainnya.map((item) => (
+              <div
+                key={item.id}
+                className="flex items-center justify-between p-3.5 sm:p-4 rounded-xl bg-green-50/70 hover:bg-green-100/60 transition-colors border border-green-100"
+              >
+                {editingPencapaian?.id === item.id ? (
+                  <div className="flex-1 grid grid-cols-1 sm:grid-cols-3 gap-2 mr-3">
+                    <Input
+                      value={editingPencapaian.nama}
+                      onChange={(e) => setEditingPencapaian({ ...editingPencapaian, nama: e.target.value })}
+                      placeholder="Nama"
+                    />
+                    <Input
+                      value={editingPencapaian.prestasi}
+                      onChange={(e) => setEditingPencapaian({ ...editingPencapaian, prestasi: e.target.value })}
+                      placeholder="Prestasi"
+                    />
+                    <Input
+                      value={editingPencapaian.tingkat || ""}
+                      onChange={(e) => setEditingPencapaian({ ...editingPencapaian, tingkat: e.target.value })}
+                      placeholder="Tingkat"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex items-start sm:items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5 sm:mt-0" />
+                    <div>
+                      <span className="font-semibold text-green-900 text-sm sm:text-base">
+                        {item.nama}
+                      </span>
+                      <span className="text-gray-700 text-sm sm:text-base"> — {item.prestasi}</span>
+                      {item.tingkat && (
+                        <span className="ml-2 inline-block px-2 py-0.5 text-xs font-medium bg-green-200 text-green-800 rounded-full">
+                          {item.tingkat}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {isAdmin && (
+                  <div className="flex items-center gap-1.5 ml-2">
+                    {editingPencapaian?.id === item.id ? (
+                      <>
+                        <Button size="sm" onClick={handleSavePencapaian} className="bg-green-700 hover:bg-green-800 p-1.5 h-8">
+                          <Save className="w-4 h-4" />
+                        </Button>
+                        <Button size="sm" variant="outline" onClick={() => setEditingPencapaian(null)} className="p-1.5 h-8">
+                          <X className="w-4 h-4" />
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Button size="sm" variant="ghost" onClick={() => handleEditPencapaian(item)} className="p-1.5 h-8 text-gray-600 hover:text-green-800">
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button size="sm" variant="ghost" onClick={() => handleDeletePencapaian(item.id)} className="p-1.5 h-8 text-red-600 hover:text-red-800">
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   )
