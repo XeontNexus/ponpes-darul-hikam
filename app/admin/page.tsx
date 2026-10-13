@@ -45,13 +45,20 @@ export default function AdminLoginPage() {
           {/* Logo & Header */}
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-              <div className="p-2 bg-white rounded-2xl shadow-xl ring-4 ring-emerald-400/30">
+              <div
+                className="p-2 bg-white rounded-2xl shadow-xl ring-4 ring-emerald-400/30 logo-white-badge"
+                style={{
+                  backgroundColor: "#ffffff",
+                  backgroundImage: "linear-gradient(#ffffff, #ffffff)",
+                  colorScheme: "light",
+                }}
+              >
                 <Image
                   src="/images/logo-darul-hikam.png"
                   alt="Logo Darul Hikam"
                   width={64}
                   height={64}
-                  className="object-contain"
+                  className="object-contain rounded-xl"
                 />
               </div>
             </div>

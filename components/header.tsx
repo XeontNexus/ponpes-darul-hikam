@@ -52,13 +52,20 @@ export function Header({
             }}
             className="flex items-center gap-3 cursor-pointer group min-w-0 flex-1 sm:flex-initial"
           >
-            <div className="relative p-1.5 bg-white rounded-xl shadow-md ring-2 ring-emerald-400/40 group-hover:scale-105 transition-transform duration-300 flex-shrink-0">
+            <div
+              className="relative p-1.5 bg-white rounded-xl shadow-md ring-2 ring-emerald-400/40 group-hover:scale-105 transition-transform duration-300 flex-shrink-0 logo-white-badge"
+              style={{
+                backgroundColor: "#ffffff",
+                backgroundImage: "linear-gradient(#ffffff, #ffffff)",
+                colorScheme: "light",
+              }}
+            >
               <Image
                 src="/images/logo-darul-hikam.png"
                 alt="Logo Pondok Pesantren DARUL HIKAM"
                 width={48}
                 height={48}
-                className="object-contain w-9 h-9 sm:w-11 sm:h-11"
+                className="object-contain w-9 h-9 sm:w-11 sm:h-11 rounded-lg"
               />
             </div>
             <div className="min-w-0 flex-1">

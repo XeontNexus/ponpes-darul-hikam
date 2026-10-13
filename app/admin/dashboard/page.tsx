@@ -171,8 +171,15 @@ export default function AdminDashboardPage() {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 p-5 border-b border-green-800/60">
-          <div className="p-1.5 bg-white rounded-xl flex-shrink-0">
-            <Image src="/images/logo-darul-hikam.png" alt="Logo" width={36} height={36} className="object-contain" />
+          <div
+            className="p-1.5 bg-white rounded-xl flex-shrink-0 logo-white-badge"
+            style={{
+              backgroundColor: "#ffffff",
+              backgroundImage: "linear-gradient(#ffffff, #ffffff)",
+              colorScheme: "light",
+            }}
+          >
+            <Image src="/images/logo-darul-hikam.png" alt="Logo" width={36} height={36} className="object-contain rounded-lg" />
           </div>
           <div>
             <p className="font-bold text-sm leading-tight">Panel Admin</p>

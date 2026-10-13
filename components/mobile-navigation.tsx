@@ -52,13 +52,20 @@ export function MobileNavigation({ activeSection, setActiveSection }: MobileNavi
           <div>
             <SheetHeader className="p-5 border-b border-green-800/80 bg-green-950/80">
               <div className="flex items-center gap-3">
-                <div className="p-1.5 bg-white rounded-xl shadow-md ring-2 ring-emerald-400/40 flex-shrink-0">
+                <div
+                  className="p-1.5 bg-white rounded-xl shadow-md ring-2 ring-emerald-400/40 flex-shrink-0 logo-white-badge"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    backgroundImage: "linear-gradient(#ffffff, #ffffff)",
+                    colorScheme: "light",
+                  }}
+                >
                   <Image
                     src="/images/logo-darul-hikam.png"
                     alt="Logo"
                     width={38}
                     height={38}
-                    className="object-contain"
+                    className="object-contain rounded-lg"
                   />
                 </div>
                 <div className="min-w-0 flex-1">

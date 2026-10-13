@@ -173,3 +173,12 @@ h5,
 h6 {
   line-height: 1.2;
 }
+
+/* Kunci latar belakang badge logo agar TETAP putih bersih di mode malam / HP dark mode */
+.logo-white-badge {
+  background-color: #ffffff !important;
+  background-image: linear-gradient(#ffffff, #ffffff) !important;
+  color-scheme: light !important;
+  forced-color-adjust: none !important;
+  isolation: isolate;
+}

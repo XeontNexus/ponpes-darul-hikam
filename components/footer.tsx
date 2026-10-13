@@ -35,13 +35,20 @@ export function Footer({ setActiveSection }: FooterProps) {
               onClick={() => handleNav("home")}
               className="flex items-center gap-3 cursor-pointer group"
             >
-              <div className="p-1.5 bg-white rounded-xl shadow-md ring-2 ring-emerald-400/40 flex-shrink-0 group-hover:scale-105 transition-transform">
+              <div
+                className="p-1.5 bg-white rounded-xl shadow-md ring-2 ring-emerald-400/40 flex-shrink-0 group-hover:scale-105 transition-transform logo-white-badge"
+                style={{
+                  backgroundColor: "#ffffff",
+                  backgroundImage: "linear-gradient(#ffffff, #ffffff)",
+                  colorScheme: "light",
+                }}
+              >
                 <Image
                   src="/images/logo-darul-hikam.png"
                   alt="Logo Pondok Pesantren DARUL HIKAM"
                   width={44}
                   height={44}
-                  className="object-contain"
+                  className="object-contain rounded-lg"
                 />
               </div>
               <div>
