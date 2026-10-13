@@ -5,18 +5,19 @@ import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://darulhikamtebo.com"
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://darul-hikam-rimbo-ulu.vercel.app"
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Pondok Pesantren DARUL HIKAM Tebo - Membentuk Generasi Qur'ani",
-    template: "%s | Ponpes Darul Hikam Tebo",
+    default: "Pondok Pesantren Darul Hikam Rimbo Ulu - Membentuk Generasi Qur'ani",
+    template: "%s | Ponpes Darul Hikam Rimbo Ulu",
   },
   description:
     "Website Resmi Yayasan Pondok Pesantren DARUL HIKAM, Desa Suka Damai, Kecamatan Rimbo Ulu, Kabupaten Tebo, Jambi. Informasi Penerimaan Santri Baru (PSB 2026/2027), Tahfidz Al-Qur'an, MTs, dan MA.",
   keywords: [
     "Pondok Pesantren Darul Hikam",
+    "Darul Hikam Rimbo Ulu",
     "Darul Hikam Tebo",
     "Pesantren Rimbo Ulu",
     "Ponpes Darul Hikam Jambi",
@@ -27,9 +28,9 @@ export const metadata: Metadata = {
     "Tahfidz Quran Tebo",
     "Pendidikan Islam Terpadu",
   ],
-  authors: [{ name: "Yayasan Pondok Pesantren DARUL HIKAM" }],
-  creator: "Yayasan Pondok Pesantren DARUL HIKAM",
-  publisher: "Yayasan Pondok Pesantren DARUL HIKAM",
+  authors: [{ name: "Yayasan Pondok Pesantren DARUL HIKAM Rimbo Ulu" }],
+  creator: "Yayasan Pondok Pesantren DARUL HIKAM Rimbo Ulu",
+  publisher: "Yayasan Pondok Pesantren DARUL HIKAM Rimbo Ulu",
   formatDetection: {
     email: false,
     address: false,
@@ -50,15 +51,15 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "DARUL HIKAM",
+    title: "Darul Hikam Rimbo Ulu",
     startupImage: ["/icons/icon-192x192.png"],
   },
   openGraph: {
     type: "website",
     locale: "id_ID",
     url: siteUrl,
-    siteName: "Pondok Pesantren DARUL HIKAM Tebo",
-    title: "Pondok Pesantren DARUL HIKAM Tebo - Membentuk Generasi Qur'ani",
+    siteName: "Pondok Pesantren Darul Hikam Rimbo Ulu",
+    title: "Pondok Pesantren Darul Hikam Rimbo Ulu - Membentuk Generasi Qur'ani",
     description:
       "Website Resmi Yayasan Pondok Pesantren DARUL HIKAM, Desa Suka Damai, Kecamatan Rimbo Ulu, Kabupaten Tebo, Jambi. Informasi Penerimaan Santri Baru (PSB), Tahfidz Quran, dan Program Pendidikan Terpadu.",
     images: [
@@ -66,13 +67,13 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Logo Resmi Yayasan Pondok Pesantren Darul Hikam Tebo",
+        alt: "Logo Resmi Yayasan Pondok Pesantren Darul Hikam Rimbo Ulu Tebo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Pondok Pesantren DARUL HIKAM Tebo",
+    title: "Pondok Pesantren Darul Hikam Rimbo Ulu",
     description:
       "Website Resmi Yayasan Pondok Pesantren DARUL HIKAM - Membentuk Generasi Qur'ani Berakhlak Mulia",
     images: ["/og-image.png"],
@@ -102,8 +103,8 @@ export const viewport: Viewport = {
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "EducationalOrganization",
-  name: "Yayasan Pondok Pesantren DARUL HIKAM",
-  alternateName: "Ponpes Darul Hikam Tebo",
+  name: "Yayasan Pondok Pesantren DARUL HIKAM Rimbo Ulu",
+  alternateName: "Darul Hikam Rimbo Ulu",
   url: siteUrl,
   logo: `${siteUrl}/icons/icon-512x512.png`,
   image: `${siteUrl}/og-image.png`,
